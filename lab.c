@@ -51,11 +51,36 @@ void LengthTest() {
   int len = Length(myList);
 }
 
+void Push(struct node** headRef, int data) {
+    struct node* newNode = malloc(sizeof(struct node));
+
+    newNode->data = data;
+    newNode->next = *headRef;
+    *headRef = newNode;
+}
+
+struct node* BuildWithSpecialCase() {
+    struct node* head = NULL;
+    struct node* tail;
+    int i;
+
+    Push(&head, 1);
+    tail = head;
+
+    for (i=2; i<6; i++) {
+      Push(&(tail->next),i);
+      tail = tail->next;
+    }
+
+    return(head);
+}    
+
+
+
 int main(){
-  struct node* lista = BuildOneTwoThree();
-  Length(lista);
-  LengthTest();
-  print(lista);
+    struct node* lista = BuildWithSpecialCase();
+    print(lista);
+
 
   return 0;
 }
