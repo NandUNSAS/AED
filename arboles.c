@@ -16,6 +16,7 @@ struct node* newNode(int data){
     return node;
 }    
 
+
 int lookup(struct node* node, int target ){
     if(node == NULL)
       return false;
@@ -26,15 +27,19 @@ int lookup(struct node* node, int target ){
     else
       return lookup(node->right,target);
 }
+
 struct node* insert(struct node* node, int data){
     if(node == NULL)
       return newNode(data);
+
     if(data <= node->data)
       node->left = insert(node->left,data);
+
     else
-      node->right = insert(node->left,data);
+      node->right = insert(node->right,data);
     return node;
 }
+
 
 void inOrder(struct node* node, int* argc, int* argv){
     if(node == NULL)
@@ -46,13 +51,38 @@ void inOrder(struct node* node, int* argc, int* argv){
       inOrder(node->right, argc, argv++);
     }    
 }
+
+int size(struct node* node){
+  if(node == NULL){
+      return 0;
+  }
+  
+  return 1 + size(node->left) + size(node->right);
+}
+
+void printTree(struct node* root){
+    if(!root)
+	printf(" ");
+    else{ 
+      printTree(root->left);
+      printf("%d",root->data);
+      printTree(root->right);
+    }
+}
+
 int main(){
-    struct node* arbol;
-    insert(arbol,5);
-    insert(arbol,3);
-    insert(arbol,9);
-    int argc=0;
-    char arreglo[3];
-    int* a = &arreglo[0];
-    inOrder(arbol,&argc,a);
+    struct node* arbol=NULL;
+    arbol=insert(arbol,10);
+    arbol=insert(arbol,5);
+    arbol=insert(arbol,2);
+    arbol=insert(arbol,1);
+    arbol=insert(arbol,3);
+    arbol=insert(arbol,12);
+    arbol=insert(arbol,11);
+    arbol=insert(arbol,13);
+    arbol=insert(arbol,14);
+    printTree(arbol);
+    printf("\n");
+    int cant = size(arbol);
+    printf("numero de nodos : %d \n",cant);
 }
